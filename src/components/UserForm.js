@@ -1,13 +1,15 @@
 import React,{useState,useEffect} from 'react'
 
 const UserForm =({editUser,addUser,selectedUser})=> {
-    const [user,setUser] = useState();
+    const [user,setUser] = useState({ id: "", name: "", email: "", department: "" });
 
     useEffect(()=>{
-        if(selectedUser){
-            setUser(selectedUser)
-        }
+        if (selectedUser) {
+            setUser(selectedUser);
 
+          } else {
+            setUser({ id: "", name: "", email: "", department: "" });
+          }
     },[selectedUser])
 
     const handleChange =(e)=>{
@@ -38,7 +40,7 @@ const UserForm =({editUser,addUser,selectedUser})=> {
             <input name='name' value={user.name} placeholder='Name' onChange={handleChange} required/>
             <input name='email' value={user.email} placeholder='Email' onChange={handleChange} required/>
             <input name='department' value={user.department} placeholder='Department' onChange={handleChange} required/>
-            <button type='submit'>{selectedUser?"Update User":"AddUser"}</button>
+            <button type='submit'>{selectedUser?"Update User":"Add User"}</button>
 
         </form>
       
