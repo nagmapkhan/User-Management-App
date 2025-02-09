@@ -10,7 +10,10 @@ class  App extends Component {
   state = {
     users: [],
     selectedUser : null,
-    error:null
+    error:null,
+    currentPage:1,
+    userPerPage:5,
+
   }
   componentDidMount(){
     this.fetchUserData();
@@ -29,7 +32,7 @@ class  App extends Component {
   };
 addUser = async(user) =>{
   try{
-    const response = await axios.post("https://jasonplaceholder.typicode.com/users",user)
+    const response = await axios.post("https://jsonplaceholder.typicode.com/users",user)
     this.setState({users:[...this.state.users, response.data]})
   }catch(error){
     this.setState({error:"Failed to add User"})
@@ -41,11 +44,11 @@ addUser = async(user) =>{
   editUser = async(updatedUser)=>{
     try{
       await axios.put(`https://jsonplaceholder.typicode.com/users/${updatedUser.id}`,updatedUser);
-      const users = this.setState.users.map((user)=>
+      const updatedUsers = this.state.users.map((user)=>
          user.id === updatedUser.id ? updatedUser: user
 
       );
-      this.setState({users,selectedUser:null});
+      this.setState({users:updatedUsers,selectedUser:null});
 
     }catch(error){
       this.setState({error:"Failed to update user"})
@@ -53,9 +56,12 @@ addUser = async(user) =>{
     }
 
   }
+  changePage = (step) => {
+    this.setState((prevState)=>({
+      currentPage:prevState.currentPage + step,
+    }));
+  };
 
-
-  
     
   deleteUser = async (id) => {
     try {
@@ -73,12 +79,24 @@ addUser = async(user) =>{
   }
 
   render(){
+    const {users,error,currentPage,userPerPage} = this.state;
+    const indexOfLastUser = currentPage * userPerPage;
+    const indexOfFirstUser = indexOfLastUser - userPerPage;
+    const currentUsers = users.slice(indexOfFirstUser,indexOfLastUser);
+
   return (
     <ErrorBoundry>
     <div className="App">
       <h1>Management App</h1>
-     <UserList users={this.state.users} deleteUser={this.deleteUser} selectUser={this.selectUser}/>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+     <UserList users={currentUsers} deleteUser={this.deleteUser} selectUser={this.selectUser}/>
      <UserForm addUser={this.addUser} editUser={this.editUser} selectedUser={this.state.selectedUser}/>
+
+     <div className="pagination"> 
+      <button onClick={()=>this.changePage(-1)} disabled={currentPage===1} >Previous</button>
+      <button onClick={()=>this.changePage(1)} disabled={indexOfLastUser>=users.length} >Next</button>
+     </div>
+    
     </div>
     </ErrorBoundry>
   );

@@ -9,6 +9,7 @@ const  UserList = ({users,deleteUser,selectUser})=> {
           <tr>
             <th>ID</th>
             <th>NAME</th>
+            <th>USER NAME</th>
             <th>EMAIL</th>
             <th>DEPARTMENT</th>
             <th>ACTIONS</th>
@@ -20,6 +21,7 @@ const  UserList = ({users,deleteUser,selectUser})=> {
           <tr key={user.id}>
             <td>{user.id}</td>
             <td>{user.name}</td>
+            <td>{user.username}</td>
             <td>{user.email}</td>
             <td> {user.department || "N/A"}</td>
             <td>
