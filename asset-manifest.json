@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nagmapkhan/User-Management-App.git/static/css/main.3330c249.css",
+    "main.js": "/nagmapkhan/User-Management-App.git/static/js/main.e2470499.js",
+    "index.html": "/nagmapkhan/User-Management-App.git/index.html",
+    "main.3330c249.css.map": "/nagmapkhan/User-Management-App.git/static/css/main.3330c249.css.map",
+    "main.e2470499.js.map": "/nagmapkhan/User-Management-App.git/static/js/main.e2470499.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3330c249.css",
+    "static/js/main.e2470499.js"
+  ]
+}
